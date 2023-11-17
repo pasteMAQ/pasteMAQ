@@ -4,6 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import PasteMAQ from './components/PasteMAQ';
 import ViewPaste from './components/ViewPaste';
+import ValidatePin from './components/ValidatePin';
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
 const App = () => {
@@ -30,6 +31,10 @@ const appRouter = createBrowserRouter([
             {
                 path: "/view-paste/:pasteId",
                 element: <ViewPaste />,
+            },
+            {
+                path: "/validate-pin/:pasteId",
+                element: <ValidatePin />,
             }
         ],
     }

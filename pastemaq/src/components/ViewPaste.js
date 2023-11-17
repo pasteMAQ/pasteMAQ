@@ -5,23 +5,23 @@ const ViewPaste = () => {
     const [text, setText] = React.useState('');
     const [expiryDate, setExpiryDate] = React.useState();
 
+    const fetchPasteData = async () => {
+        const options = {
+            method: "GET",
+            headers: new Headers({ "Content-Type": "application/json; charset=utf-8" })
+        };
+        const response = await fetch('http://localhost:5005/view-paste/' + pasteId,
+            options
+        );
+        const data = await response.json();
+        console.log(data);
+        setText(data.content);
+        setExpiryDate(new Date(data.expiryDate));
+    }
+
+
     useEffect(() => {
-        fetch('https://paste-maq.vercel.app/view-paste/' + pasteId, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            mode: 'cors'
-        })
-            .then(response => response.json())
-            .then(data => {
-                setText(data.content);
-                setExpiryDate(new Date(data.expiryDate));
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            }
-            );
+        fetchPasteData();
     }, []);
 
     var datemap = { 1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June", 7: "July", 8: "August", 9: "September", 10: "October", 11: "November", 12: "December" };

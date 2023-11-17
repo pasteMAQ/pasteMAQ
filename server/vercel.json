@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@now/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/view-paste/(.*)",
+      "dest": "index.js"
+    },
+    {
+      "src": "/paste",
+      "dest": "index.js"
+    }
+  ]
+}
