@@ -6,7 +6,7 @@ const ViewPaste = () => {
     const [expiryDate, setExpiryDate] = React.useState();
 
     useEffect(() => {
-        fetch('http://localhost:5005/view-paste/' + pasteId, {
+        fetch('https://paste-maq.vercel.app/view-paste/' + pasteId, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

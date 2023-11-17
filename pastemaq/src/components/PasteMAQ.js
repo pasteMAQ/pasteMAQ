@@ -26,7 +26,7 @@ const PasteMAQ = () => {
             "expiryDate": expiryDate,
             "pasteId": pasteId
         };
-        fetch('http://localhost:5005/paste', {
+        fetch('https://paste-maq.vercel.app/paste', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
