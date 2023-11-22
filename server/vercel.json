@@ -12,6 +12,14 @@
       "dest": "index.js"
     },
     {
+      "src": "/validate-paste/(.*)",
+      "dest": "index.js"
+    },
+    {
+      "src": "/validate-pin/(.*)",
+      "dest": "index.js"
+    },
+    {
       "src": "/paste",
       "dest": "index.js"
     }
