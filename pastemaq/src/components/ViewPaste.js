@@ -2,14 +2,18 @@ import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import Loader from './Loader';
 
-const ViewPaste = ({pasteId}) => {
+const ViewPaste = ({ pasteId }) => {
     const [text, setText] = React.useState('');
     const [expiryDate, setExpiryDate] = React.useState();
+
+    let reqHeaders = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    reqHeaders.append('Access-Control-Allow-Origin', '*');
 
     const fetchPasteData = async () => {
         const options = {
             method: "GET",
-            headers: new Headers({ "Content-Type": "application/json; charset=utf-8" })
+            headers: reqHeaders
         };
         const response = await fetch('https://paste-maq-server.vercel.app/view-paste/' + pasteId,
             options
@@ -29,7 +33,7 @@ const ViewPaste = ({pasteId}) => {
         navigator.clipboard.writeText(window.location.toString())
     }
 
-    return text == ''? <Loader /> : (
+    return text == '' ? <Loader /> : (
         <div>
             <div className='paste-id'>Paste # {pasteId}</div>
             <textarea disabled rows="10" cols="80" style={{ height: '170px' }} value={text}></textarea>

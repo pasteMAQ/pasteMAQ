@@ -10,21 +10,25 @@ const ValidationPin = () => {
   const [showComponent, setShowComponent] = useState(<Loader />);
 
   const validatePaste = async () => {
+    let reqHeaders = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    reqHeaders.append('Access-Control-Allow-Origin', '*');
+
     const options = {
-        method: "GET",
-        headers: new Headers({ "Content-Type": "application/json; charset=utf-8" })
+      method: "GET",
+      headers: reqHeaders
     };
     const response = await fetch('https://paste-maq-server.vercel.app/validate-paste/' + pasteId,
-        options
+      options
     );
     const data = await response.json();
     if (!data.found) {
-        setShowComponent(<ViewPaste pasteId={pasteId} />);
+      setShowComponent(<ViewPaste pasteId={pasteId} />);
     }
     else {
-        setShowComponent(React.Fragment)
+      setShowComponent(React.Fragment)
     }
-}
+  }
 
   useEffect(() => {
     validatePaste()
@@ -40,9 +44,13 @@ const ValidationPin = () => {
   };
 
   const handleSubmit = async () => {
+    let reqHeaders = new Headers();
+    reqHeaders.append('Content-Type', 'application/json');
+    reqHeaders.append('Access-Control-Allow-Origin', '*');
+
     const options = {
       method: "GET",
-      headers: new Headers({ "Content-Type": "application/json; charset=utf-8" })
+      headers: reqHeaders
     };
     const response = await fetch('http://localhost:5005/validate-pin/' + pasteId + '/' + pin,
       options
@@ -52,11 +60,11 @@ const ValidationPin = () => {
       setShowComponent(<ViewPaste pasteId={pasteId} />);
     }
     else {
-        alert("Pin not matched");
+      alert("Pin not matched");
     }
   };
 
-  return showComponent == React.Fragment? (
+  return showComponent == React.Fragment ? (
     <div>
       <h5>This paste is secured by a pin. Please enter a pin to access the paste.</h5>
       <label>
