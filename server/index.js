@@ -7,7 +7,7 @@ const { db } = require('./config')
 const app = express();
 
 app.use(cors({
-    origin: ['https://paste-maq.vercel.app', 'https://paste-maq-server.vercel.app']
+    origin: ['https://paste-maq.vercel.app', 'https://paste-maq.vercel.app/', 'https://paste-maq-server.vercel.app', 'https://paste-maq-server.vercel.app/']
 }));
 
 // parse application/x-www-form-urlencoded
