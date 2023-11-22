@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Loader from './Loader';
 
-const ViewPaste = () => {
+const ViewPaste = ({pasteId}) => {
     const [text, setText] = React.useState('');
     const [expiryDate, setExpiryDate] = React.useState();
 
@@ -10,18 +11,16 @@ const ViewPaste = () => {
             method: "GET",
             headers: new Headers({ "Content-Type": "application/json; charset=utf-8" })
         };
-        const response = await fetch('http://localhost:5005/view-paste/' + pasteId,
+        const response = await fetch('https://paste-maq-server.vercel.app/view-paste/' + pasteId,
             options
         );
         const data = await response.json();
-        console.log(data);
         setText(data.content);
         setExpiryDate(new Date(data.expiryDate));
     }
 
-
     useEffect(() => {
-        fetchPasteData();
+        fetchPasteData()
     }, []);
 
     var datemap = { 1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June", 7: "July", 8: "August", 9: "September", 10: "October", 11: "November", 12: "December" };
@@ -30,8 +29,7 @@ const ViewPaste = () => {
         navigator.clipboard.writeText(window.location.toString())
     }
 
-    const { pasteId } = useParams();
-    return (
+    return text == ''? <Loader /> : (
         <div>
             <div className='paste-id'>Paste # {pasteId}</div>
             <textarea disabled rows="10" cols="80" style={{ height: '170px' }} value={text}></textarea>

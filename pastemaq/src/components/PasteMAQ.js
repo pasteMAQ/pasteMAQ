@@ -38,31 +38,13 @@ const PasteMAQ = () => {
             headers: reqHeaders,
             body: JSON.stringify(data)
         };
-        const response = await fetch('http://localhost:5005/paste',
+        const response = await fetch('https://paste-maq-server.vercel.app/paste',
             options
         );
         const result = await response.json();
         if (result.msg === "Paste Added") {
-            if (pastePin !== '') {
-                navigate('/validate-pin/' + pasteId);
-            } else {
-                navigate('/view-paste/' + pasteId);
-            }
+            navigate('/view-paste/' + pasteId);
         }
-        console.log(result);
-
-        // fetch('https://paste-maq-server.vercel.app/paste',{
-        //     method: "POST",
-        //     headers: reqHeaders,
-        //     body: JSON.stringify(data)
-        // }  
-        // ).then(response => {
-        //     console.log(response);
-        //     navigate('/view-paste/' + pasteId);
-        // }).catch(error => {
-        //     console.log(error);
-        // }
-        // );
     }
 
     const setPin = (pin) => {

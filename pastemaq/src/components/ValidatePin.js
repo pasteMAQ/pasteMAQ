@@ -1,12 +1,34 @@
 // PinValidationPage.js
-import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Loader from './Loader';
+import ViewPaste from './ViewPaste';
 
 const ValidationPin = () => {
   const [pin, setPin] = useState('');
   const { pasteId } = useParams();
-  const navigate = useNavigate();
-  const [showPopup, setShowPopup] = useState(false);
+  const [showComponent, setShowComponent] = useState(<Loader />);
+
+  const validatePaste = async () => {
+    const options = {
+        method: "GET",
+        headers: new Headers({ "Content-Type": "application/json; charset=utf-8" })
+    };
+    const response = await fetch('https://paste-maq-server.vercel.app/validate-paste/' + pasteId,
+        options
+    );
+    const data = await response.json();
+    if (!data.found) {
+        setShowComponent(<ViewPaste pasteId={pasteId} />);
+    }
+    else {
+        setShowComponent(React.Fragment)
+    }
+}
+
+  useEffect(() => {
+    validatePaste()
+  }, []);
 
 
   const handlePinChange = (event) => {
@@ -26,21 +48,15 @@ const ValidationPin = () => {
       options
     );
     const data = await response.json();
-    console.log(data);
     if (data.matched) {
-      navigate('/view-paste/' + pasteId);
+      setShowComponent(<ViewPaste pasteId={pasteId} />);
     }
     else {
-        setShowPopup(true);
+        alert("Pin not matched");
     }
   };
 
-  const closePopup = () => {
-    // Close the popup
-    setShowPopup(false);
-  };
-
-  return (
+  return showComponent == React.Fragment? (
     <div>
       <h5>This paste is secured by a pin. Please enter a pin to access the paste.</h5>
       <label>
@@ -52,14 +68,8 @@ const ValidationPin = () => {
         />
       </label>
       <div><button onClick={handleSubmit}>Submit</button></div>
-      {showPopup && (
-        <div className="popup">
-          <p id="popup-text">Incorrect PIN. Please try again.</p>
-          <button onClick={closePopup}>Close</button>
-        </div>
-      )}
     </div>
-  );
+  ) : showComponent;
 };
 
 export default ValidationPin;
