@@ -52,7 +52,7 @@ const ValidationPin = () => {
       method: "GET",
       headers: reqHeaders
     };
-    const response = await fetch('http://localhost:5005/validate-pin/' + pasteId + '/' + pin,
+    const response = await fetch('https://paste-maq-server.vercel.app/validate-pin/' + pasteId + '/' + pin,
       options
     );
     const data = await response.json();
