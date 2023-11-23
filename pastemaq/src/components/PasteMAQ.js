@@ -29,6 +29,11 @@ const PasteMAQ = () => {
             "pasteId": pasteId,
             "pastePin": pastePin
         };
+
+        if (text == '') {
+            alert("Please enter some text to paste");
+            return;
+        }
         let reqHeaders = new Headers();
         reqHeaders.append('Content-Type', 'application/json');
         reqHeaders.append('Access-Control-Allow-Origin', '*');
@@ -56,7 +61,7 @@ const PasteMAQ = () => {
             <textarea name="code" rows="10" cols="80" style={{ height: '170px' }} value={text} onChange={handleChange}></textarea>
             <div>
                 <h5>This paste will expire by default on <span id="time">{datemap[expiryDate?.getMonth() + 1] + " " + expiryDate?.getDate() + ", " + expiryDate?.getFullYear()}</span></h5>
-                <h5>Select Expiry Date <input type="date" value={expiryDate} onChange={(event) => setExpiryDate(new Date(event.target.value))} /></h5>
+                <h5>Select Expiry Date <input type="date" className="datepicker" value={expiryDate?.getFullYear() + "-" + (!parseInt((parseInt(expiryDate?.getMonth()) + 1)/10)? "0" + (expiryDate?.getMonth() + 1) : (expiryDate?.getMonth() + 1)) + "-" + (!parseInt(parseInt(expiryDate?.getDate())/10)? "0" + expiryDate?.getDate() : expiryDate?.getDate())} min={new Date().toISOString().split('T')[0]} onChange={(event) => setExpiryDate(new Date(event.target.value))} /></h5>
                 <SetPin passPin={setPin} />
                 <div>
                     <button type="submit" value="Paste!" onClick={() => setPasteData()}><span>Paste!</span></button>
