@@ -11,15 +11,14 @@ const SetPin = ({ passPin }) => {
   };
 
   return (
-    <div>
-      <h5>
-        Please set 4 digit pin if you want to share code with external user:
+    <div class = "setPin">
+        Set 4 digit pin:
         <input
-          type="password"
+          type="text"
           onChange={handlePinChange}
+          style={{ width: "32px", marginTop: "4px", marginLeft: "4px" }}
           maxLength="4"
         />
-      </h5>
     </div>
   );
 };
